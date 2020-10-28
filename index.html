@@ -17,6 +17,8 @@
     <!-- https://pixabay.com/videos/download/video-31175_tiny.mp4?attachment -->
     <div class="player">
         <video src="https://pixabay.com/videos/download/video-31175_tiny.mp4?attachment" class="video" playsinline></video>
+        <!-- Play Button on video -->
+        <i class="fas fa-play-circle" id="play-button-large" title = "Play"></i>
         <!-- Show Controls -->
         <div class="show-controls">
             <!-- Controls Container -->
@@ -47,17 +49,17 @@
                         <!-- Speed -->
                         <div class="speed" title="Playback Rate">
                             <select name="playback-rate" class="player-speed">
-                                <option value="0.5">0.5x</option>
-                                <option value="0.75">0.75x</option>
-                                <option value="1.0">1.0x</option>
-                                <option value="1.5">1.5x</option>
                                 <option value="2">2x</option>
+                                <option value="1.5">1.5x</option>
+                                <option value="1.0">1.0x</option>
+                                <option value="0.75">0.75x</option>
+                                <option value="0.5">0.5x</option>
                             </select>
                         </div>
                         <!-- Time -->
                         <div class="time">
-                            <span class="time-elapsed">00:00 /</span>
-                            <span class="time-duration">02:38</span>
+                            <span class="time-elapsed"></span>
+                            <span class="time-duration"></span>
                         </div>
                         <!-- Fullscreen -->
                         <div class="fullscreen">
