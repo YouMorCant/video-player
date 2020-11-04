@@ -62,6 +62,72 @@ function seekProgress(e) {
 
 // Volume Controls --------------------------- //
 
+let lastVolume = 1;
+let muted = false;
+
+function setVolumeIcon(vol) {
+    volumeIcon.className = '';
+    if (muted === false) {
+        if (vol > 0.7) {
+            volumeIcon.classList.add('fas','fa-volume-up');
+        } else if (vol < 0.7 && vol > 0) {
+            volumeIcon.classList.add('fas','fa-volume-down');
+        } else if (vol === 0) {
+            volumeIcon.classList.add('fas','fa-volume-off');
+        }
+        volumeIcon.setAttribute('title','Mute');
+    }else {
+        volumeIcon.classList.add('fas','fa-volume-mute');
+        volumeIcon.setAttribute('title','Unmute')
+    }
+}
+
+// Volume Bar
+function changeVolume(e) {
+    let volume = e.offsetX / volumeRange.offsetWidth;
+    
+    //Rounding volume up or down
+    if (volume < 0.1) {
+        volume = 0;
+    }
+    if(volume > 0.9){
+        volume = 1;
+    }
+    volumeBar.style.width = `${volume * 100}%`;
+    video.volume = volume;
+
+    // automatically unmutes if the user picks a new volume
+    if (volume > 0.1){
+        muted = false;
+    }
+    
+    setVolumeIcon(volume);
+
+    lastVolume = volume;
+}
+
+// mute/unmute
+function toggleMute() {
+    if (muted === false){
+        if(video.volume) {
+            lastVolume = video.volume;
+            video.volume = 0;
+            volumeBar.style.width = 0;
+        }
+        muted = true;
+
+    }else {
+        video.volume = lastVolume;
+        volumeBar.style.width = `${lastVolume * 100}%`;
+        muted = false;
+    }
+    
+    setVolumeIcon(video.volume);
+}
+
+
+
+
 
 
 // Change Playback Speed -------------------- //
@@ -75,6 +141,8 @@ function seekProgress(e) {
 playBtn.addEventListener('click', togglePlay);
 bigPlayBtn.addEventListener('click', togglePlay);
 video.addEventListener('click', togglePlay);
-video.addEventListener('timeupdate', updateProgress);
+video.addEventListener('timeupdate', updateProgress); // setInterval(updateProgress, 1000) for longer videos so it only fires every second
 video.addEventListener('canplay', updateProgress);
 progressRange.addEventListener('click', seekProgress);
+volumeRange.addEventListener('click', changeVolume);
+volumeIcon.addEventListener('click', toggleMute);
